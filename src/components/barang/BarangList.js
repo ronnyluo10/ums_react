@@ -3,10 +3,10 @@ import Datatables from '../templates/Datatables.js'
 import SideBar from '../templates/SideBar.js'
 import OpenNavBtn from '../templates/OpenNavBtn.js'
 
-const PelangganList = () => {
-	const tbody = ['id_pelanggan', 'nama', 'domisili', 'jenis_kelamin']
+const BarangList = () => {
+	const tbody = ['kode', 'nama', 'kategori', 'harga']
 
-	const thead = ['ID Pelanggan', 'Nama', 'Domisili', 'Jenis Kelamin']
+	const thead = ['Kode', 'Nama', 'Kategori', 'Harga']
 
 	return (
 		<div>
@@ -16,22 +16,22 @@ const PelangganList = () => {
 				<OpenNavBtn />
 
 				<div className="mb-5">
-					<h3 className="bold">Pelanggan</h3>
+					<h3 className="bold">Barang</h3>
 				</div>
 
 				<Datatables 
-					uri="/pelanggan"
+					uri="/barang"
 					tbody={ tbody }
 					thead={ thead }
 					deleteField="nama"
-					deleteUri="/pelanggan/delete/"
-					createUri="/pelanggan/tambah"
-					updateUri="/pelanggan/ubah/"
-					title="Pelanggan"
+					deleteUri="/barang/delete/"
+					createUri="/barang/tambah"
+					updateUri="/barang/ubah/"
+					title="Barang"
 				/>
 			</div>
 		</div>
 	)
 }
 
-export default PelangganList
+export default BarangList
