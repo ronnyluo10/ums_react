@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 ### `npm install`
 
-First you must npm install in your terminal before you start the mini project.
+Firsting you must do is open your terminal, then type npm install in your terminal
 
 ### `npm start`
 
