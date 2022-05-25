@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 const ItemPenjualanList = () => {
 	const tbody = ['nota', 'kode_barang', 'qty']
 
-	const thead = ['Nota', 'Kode Barang', 'qty']
+	const thead = ['Nota', 'Kode Barang', 'Qty']
 
 	const { id } = useParams()
 

@@ -13,7 +13,7 @@ const PenjualanForm = (props) => {
 		qty: [],
 	})
 
-	const [itemDescs, setItemDecs] = useState([])
+	const [itemDecs, setItemDecs] = useState([])
 
 	const [title, setTitle] = useState('Tambah')
 
@@ -48,7 +48,7 @@ const PenjualanForm = (props) => {
 				},
 			}
 
-			getListOfPelanggan()
+			getListOfMaster()
 
 			if(id && editUri) {
 				document.getElementById('pageloader').classList.remove('is-left-to-right')
@@ -62,7 +62,7 @@ const PenjualanForm = (props) => {
 		}
 	}, [])
 
-	const getListOfPelanggan = () => {
+	const getListOfMaster = () => {
 		axios.get(reactURI+'/item-penjualan/master', headers).then(response => {
 			const { pelanggan, barang } = response.data.results
 
@@ -139,8 +139,8 @@ const PenjualanForm = (props) => {
 				})
 			}
 
-			if(itemDescs.length > 0) {
-				setItemDecs(itemDescs => [])
+			if(itemDecs.length > 0) {
+				setItemDecs(itemDecs => [])
 				setSubtotal(subtotal => null)
 			}
 
@@ -195,14 +195,14 @@ const PenjualanForm = (props) => {
 			const total = hargaValue * qty
 
 			setItemDecs([
-				...itemDescs,
+				...itemDecs,
 				{
 					kode: item_desc.value,
 					nama: text[0],
 					harga: comma(hargaValue),
 					id: item_desc.value,
 					qty: qty,
-					total: comma(total),
+					total: total,
 				}
 			])
 
@@ -226,6 +226,22 @@ const PenjualanForm = (props) => {
 		} else {
 			setItemErrorMsg('Barang dan qty harus diisi')
 			unknownError()
+		}
+	}
+
+	const deleteItem = (key) => {
+		if(itemDecs[key]) {
+			state.barang.splice(key, 1)
+			state.qty.splice(key, 1)
+
+			const calculateSubTotal = subtotal - itemDecs[key].total
+
+			setSubtotal(calculateSubTotal)
+
+			itemDecs.splice(key, 1)
+
+			setState(state)
+			setItemDecs(itemDecs)
 		}
 	}
 
@@ -387,14 +403,17 @@ const PenjualanForm = (props) => {
 					    						</thead>
 
 					    						<tbody>
-					    							{ itemDescs.map((value, key) => (
+					    							{ itemDecs.map((value, key) => (
 					    								<tr key={key}>
 					    									<td>{ key + 1 }</td>
 					    									<td>{ value.kode }</td>
 					    									<td>{ value.nama }</td>
 					    									<td>{ value.harga }</td>
 					    									<td>{ value.qty }</td>
-					    									<td>{ value.total }</td>
+					    									<td>{ comma(value.total) }</td>
+					    									<td>
+					    										<button className="button is-danger" onClick={ () => deleteItem(key) }>Hapus</button>
+					    									</td>
 					    								</tr>
 					    							)) }
 					    						</tbody>
